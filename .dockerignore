@@ -1,0 +1,9 @@
+.ci
+.vscode
+.husky
+.gitignore
+.dockerignore
+README.md
+**/build
+**/dist
+**/node_modules

@@ -1,0 +1,61 @@
+name: Happy Path Regression
+
+on:
+  push:
+    branch: [ main ]
+  schedule:
+    - cron: '0 9,15,19, * * *'
+
+jobs: 
+  happy-path:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup node Js
+        uses: actions/setup-node@v2.2.0
+        with:
+          node-version: 18.x
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install robotframework-browser
+
+      - name: Start Robot - browser
+        run: rfbrowser init
+
+      - name: Clone repository
+        uses: actions/checkout@v3
+      
+      - name: Start application
+        run: |
+          chmod +x ./start-app.sh
+          ./start-app.sh
+      
+      - name: Npm install
+        run: npm install
+
+      - name: Run test cases Api
+        run: npm test server/test/apiRegression.spec.js
+
+      - name: Reset cases for next test
+        run: npm test server/test/resetCases.spec.js
+
+      - name: Robot Test 1 
+        run: robot client/test/login.robot
+
+      - name: Robot Test 2 
+        run: robot client/test/addConditions.robot
+
+      - name: Reset cases for next test
+        run: npm test server/test/resetCases.spec.js
+
+      - name: Robot Test 3 
+        run: robot client/test/logoutLogin.robot
+
+

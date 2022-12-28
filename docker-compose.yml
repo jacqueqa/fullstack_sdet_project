@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  mongodb-sdet-challenge:
+    image: mongo:4.2
+    container_name: mongodb-sdet-challenge
+    ports:
+      - '27018:27017'
+  gyant-sdet-qa-code-challenge-app:
+    build: .
+    container_name: gyant-sdet-qa-code-challenge-app
+    environment:
+      - MONGODB_CONNECTION=mongodb://mongodb-sdet-challenge:27017
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongodb-sdet-challenge
