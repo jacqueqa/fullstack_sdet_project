@@ -1,3 +1,5 @@
+[![Happy Path Regression](https://github.com/jacqueqa/fullstack_sdet_project/actions/workflows/happypath.yaml/badge.svg)](https://github.com/jacqueqa/fullstack_sdet_project/actions/workflows/happypath.yaml)
+
 ## How to Run With Docker
 ### To Start 
 ```bash
